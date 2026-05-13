@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 class DatabaseManager:
-    def __init__(self, db_name="ecolentes.db"):
+    def __init__(self, db_name="ecolens.db"):
         self.db_path = os.path.join(os.getcwd(), db_name)
         self.init_db()
 

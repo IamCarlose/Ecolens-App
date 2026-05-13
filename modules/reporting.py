@@ -10,13 +10,13 @@ class IndustrialReportGenerator:
     def __init__(self, db_manager):
         self.db = db_manager
         
-    def generate_pdf(self, filename="Ecolentes_Industrial_Report.pdf"):
+    def generate_pdf(self, filename="Ecolens_App_Industrial_Report.pdf"):
         doc = SimpleDocTemplate(filename, pagesize=letter)
         styles = getSampleStyleSheet()
         elements = []
         
         # Header
-        elements.append(Paragraph("ECOLENTES OS v4.0 - REPORTE INDUSTRIAL INTEGRAL", styles['Title']))
+        elements.append(Paragraph("ECOLENS APP OS v4.0 - REPORTE INDUSTRIAL INTEGRAL", styles['Title']))
         elements.append(Paragraph(f"Fecha de generación: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", styles['Normal']))
         elements.append(Spacer(1, 20))
         
@@ -44,11 +44,11 @@ class IndustrialReportGenerator:
                 elements.append(Paragraph("Sin datos registrados en esta sección.", styles['Normal']))
             elements.append(Spacer(1, 15))
 
-        elements.append(Paragraph("— Fin del Reporte ECOLENTES —", styles['Italic']))
+        elements.append(Paragraph("— Fin del Reporte ECOLENS APP —", styles['Italic']))
         doc.build(elements)
         return os.path.abspath(filename)
 
-    def generate_excel(self, filename="Ecolentes_Industrial_Report.xlsx"):
+    def generate_excel(self, filename="Ecolens_App_Industrial_Report.xlsx"):
         try:
             data_map = {
                 'Temperatura': (self.db.get_temp_logs(), ["ID", "Fecha", "Temp (°C)", "Notas"], '#3B82F6', 'Temperatura (°C)'),

@@ -11,7 +11,7 @@ from modules.spaghetti import SpaghettiModule
 from modules.hildegard import HildegardModule
 from modules.monitoring import MonitoringModule
 
-class EcolentesStunningOS(ctk.CTk):
+class EcolensAppStunningOS(ctk.CTk):
     def __init__(self):
         super().__init__()
 
@@ -140,7 +140,7 @@ class EcolentesStunningOS(ctk.CTk):
         self.show_module("monitoring", MonitoringModule, self.db)
 
 def main():
-    app = EcolentesStunningOS()
+    app = EcolensAppStunningOS()
     # Smooth Entry Effect (Simulated via initial update)
     app.update()
     app.attributes('-alpha', 0.98) # Stunning subtle transparency

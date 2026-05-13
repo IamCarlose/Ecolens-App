@@ -1,7 +1,7 @@
 [project]
-name = "ecolentes-os"
+name = "ecolens-app"
 version = "4.0.0"
-description = "Ecolentes Industrial OS - Stunning Series"
+description = "Ecolens App Industrial OS - Stunning Series"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
