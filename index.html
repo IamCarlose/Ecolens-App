@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecolens Industrial OS | Web Preview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <title>Ecolens Industrial OS | Suite Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -16,49 +16,74 @@
             --text-s: #334155;
             --danger: #EF4444;
             --warning: #F59E0B;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: var(--text-p); }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: var(--text-p); line-height: 1.6; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
-        header { padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; margin-bottom: 2rem; }
-        .logo { font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .badge-live { background: var(--danger); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; animation: pulse 2s infinite; }
+        /* HEADER */
+        header { padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.02em; }
+        .logo span { color: var(--accent-blue); }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        /* DASHBOARD STYLES */
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-        .card { background: var(--panel-bg); border-radius: 20px; padding: 2rem; border: 1px solid #cbd5e1; box-shadow: var(--shadow); }
+        /* HERO SECTION */
+        .hero { padding: 6rem 0 4rem; text-align: center; }
+        .badge { display: inline-block; padding: 0.5rem 1rem; background: #dbeafe; color: var(--accent-blue); border-radius: 99px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em; background: linear-gradient(to bottom, var(--text-p), #475569); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.25rem; color: var(--text-s); max-width: 700px; margin: 0 auto 2.5rem; }
         
-        .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-        .kpi-card { background: white; border-radius: 15px; padding: 1.5rem; border: 1px solid #e2e8f0; text-align: center; }
-        .kpi-card span { font-size: 0.8rem; font-weight: 700; color: var(--text-s); text-transform: uppercase; }
-        .kpi-card h2 { font-size: 1.8rem; margin-top: 5px; }
+        .cta-group { display: flex; justify-content: center; gap: 1rem; }
+        .btn { padding: 1rem 2rem; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; cursor: pointer; border: none; font-size: 0.9rem; }
+        .btn-primary { background: var(--accent-blue); color: white; box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4); }
+        .btn-outline { background: white; color: var(--text-p); border: 1px solid #cbd5e1; }
+        .btn-outline:hover { background: #f8fafc; transform: translateY(-3px); }
 
-        .timer-display { text-align: center; padding: 3rem 0; border-radius: 20px; margin-bottom: 2rem; transition: all 0.3s ease; }
-        .timer-main { font-family: 'JetBrains Mono', monospace; font-size: 5rem; font-weight: 700; color: var(--text-p); }
-        .timer-sub { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent-blue); margin-top: -10px; }
+        /* LIVE PREVIEW SECTION */
+        .live-preview { padding: 4rem 0; background: #fff; border-radius: 40px; margin-bottom: 4rem; box-shadow: var(--shadow); border: 1px solid #e2e8f0; }
+        .preview-header { text-align: center; margin-bottom: 3rem; }
+        .preview-header h2 { font-size: 2rem; font-weight: 800; color: var(--text-p); }
+        .preview-header p { color: var(--text-s); font-size: 0.9rem; margin-top: 0.5rem; }
 
-        .btn { padding: 1rem 2rem; border-radius: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; border: none; width: 100%; font-size: 0.9rem; }
+        .dashboard-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem; padding: 0 2rem; }
+        .dashboard-main { background: #f8fafc; border-radius: 24px; padding: 2rem; border: 1px solid #e2e8f0; }
+        
+        .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .kpi-card { background: white; padding: 1.2rem; border-radius: 16px; border: 1px solid #e2e8f0; text-align: center; }
+        .kpi-card span { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; }
+        .kpi-card h3 { font-size: 1.5rem; margin-top: 4px; }
+
+        .timer-display { text-align: center; padding: 2rem 0; }
+        .timer-main { font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; font-weight: 700; color: var(--text-p); }
+        .timer-sub { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--accent-blue); margin-top: -5px; }
+
+        .controls { display: grid; gap: 0.8rem; margin-top: 1rem; }
+        .btn-action { height: 55px; border-radius: 14px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-start { background: var(--accent-green); color: white; }
-        .btn-start:hover { background: #059669; transform: translateY(-2px); }
-        .btn-stop { background: var(--accent-blue); color: white; margin-top: 10px; }
-        .btn-clear { background: transparent; border: 1px solid #cbd5e1; margin-top: 10px; }
+        .btn-lap { background: var(--accent-blue); color: white; }
+        .btn-reset { background: transparent; color: var(--text-s); border: 1px solid #cbd5e1; }
 
-        .history { max-height: 300px; overflow-y: auto; margin-top: 1.5rem; padding-right: 5px; }
-        .history-item { display: flex; justify-content: space-between; padding: 0.8rem; background: #f8fafc; border-radius: 10px; margin-bottom: 5px; border: 1px solid #f1f5f9; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+        .history { height: 200px; overflow-y: auto; margin-top: 2rem; padding-right: 10px; }
+        .history-item { display: flex; justify-content: space-between; padding: 0.8rem; background: white; border-radius: 12px; margin-bottom: 6px; border: 1px solid #f1f5f9; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
 
-        .info-panel { text-align: center; }
-        .gauge-container { height: 250px; position: relative; margin-bottom: 2rem; }
+        .dashboard-side { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .gauge-wrap { width: 100%; height: 260px; margin-bottom: 2rem; }
 
-        .instructions { background: #1e293b; color: white; padding: 2rem; border-radius: 20px; margin-top: 3rem; }
-        .instructions h3 { color: var(--accent-blue); margin-bottom: 1rem; }
+        /* FEATURES SECTION */
+        .features { padding: 4rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .f-card { padding: 2.5rem; background: transparent; border-radius: 24px; border: 1px solid #e2e8f0; transition: 0.3s; }
+        .f-card:hover { background: white; box-shadow: var(--shadow); border-color: transparent; }
+        .f-icon { font-size: 2rem; margin-bottom: 1.5rem; }
+        .f-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .f-card p { font-size: 0.95rem; color: var(--text-s); }
+
+        footer { padding: 4rem 0; text-align: center; border-top: 1px solid #e2e8f0; margin-top: 4rem; color: var(--text-s); font-size: 0.85rem; }
 
         @media (max-width: 900px) {
+            .hero h1 { font-size: 2.8rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -66,108 +91,128 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <span>ECOLENS APP</span>
-                <span class="badge-live">LIVE PREVIEW</span>
-            </div>
-            <div>
-                <a href="https://github.com/IamCarlose/Ecolens-App" target="_blank" style="text-decoration: none; color: var(--accent-blue); font-weight: 600;">GitHub Repo</a>
-            </div>
+            <div class="logo">ECOLENS<span>APP</span></div>
+            <a href="https://github.com/IamCarlose/Ecolens-App" class="btn btn-outline" style="padding: 0.6rem 1.2rem;">GitHub</a>
         </header>
 
-        <div class="dashboard-grid">
-            <!-- MAIN CONTROLS -->
-            <div class="card" id="main-panel">
-                <div class="kpi-row">
-                    <div class="kpi-card">
-                        <span>Último</span>
-                        <h2 id="kpi-last" style="color: var(--accent-blue);">---</h2>
-                    </div>
-                    <div class="kpi-card">
-                        <span>Promedio</span>
-                        <h2 id="kpi-avg" style="color: var(--accent-green);">---</h2>
-                    </div>
-                    <div class="kpi-card">
-                        <span>OEE Est.</span>
-                        <h2 id="kpi-oee" style="color: var(--warning);">0%</h2>
-                    </div>
-                </div>
+        <!-- HERO -->
+        <section class="hero">
+            <span class="badge">Industrial OS v4.0</span>
+            <h1>La Nueva Era en<br>Producción Industrial</h1>
+            <p>Monitoreo inteligente, control estadístico y optimización de procesos en tiempo real. La suite definitiva para la gestión de calidad en la industria óptica.</p>
+            <div class="cta-group">
+                <a href="#demo" class="btn btn-primary">Probar Web Preview</a>
+                <a href="https://github.com/IamCarlose/Ecolens-App" class="btn btn-outline">Descargar Desktop App</a>
+            </div>
+        </section>
 
-                <div class="timer-display" id="timer-box">
-                    <div class="timer-main" id="display">00:00:00</div>
-                    <div class="timer-sub" id="sub-display">PARCIAL: 00:00.00</div>
-                </div>
-
-                <div class="controls">
-                    <button class="btn btn-start" id="startBtn">INICIAR CAPTURA</button>
-                    <button class="btn btn-clear" id="clearBtn">LIMPIAR / REINICIAR</button>
-                </div>
-
-                <div class="history" id="history">
-                    <!-- Registros aparecerán aquí -->
-                </div>
+        <!-- LIVE DEMO -->
+        <section class="live-preview" id="demo">
+            <div class="preview-header">
+                <h2>Experiencia en Tiempo Real</h2>
+                <p>Interactúa con el Dashboard de Ecolens directamente desde tu navegador.</p>
             </div>
 
-            <!-- SIDE INFO -->
-            <div class="card info-panel">
-                <h3 style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-s);">RENDIMIENTO EN TIEMPO REAL</h3>
-                <div class="gauge-container">
-                    <canvas id="oeeChart"></canvas>
+            <div class="dashboard-grid">
+                <div class="dashboard-main">
+                    <div class="kpi-row">
+                        <div class="kpi-card">
+                            <span>Último Ciclo</span>
+                            <h3 id="kpi-last" style="color: var(--accent-blue);">---</h3>
+                        </div>
+                        <div class="kpi-card">
+                            <span>Promedio</span>
+                            <h3 id="kpi-avg" style="color: var(--accent-green);">---</h3>
+                        </div>
+                        <div class="kpi-card">
+                            <span>OEE %</span>
+                            <h3 id="kpi-oee" style="color: var(--warning);">0%</h3>
+                        </div>
+                    </div>
+
+                    <div id="timer-container" style="padding: 10px; border-radius: 20px; transition: 0.3s;">
+                        <div class="timer-display">
+                            <div class="timer-main" id="display">00:00:00</div>
+                            <div class="timer-sub" id="sub-display">PARCIAL: 00:00.00</div>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn-action btn-start" id="startBtn">INICIAR CAPTURA</button>
+                        <button class="btn-action btn-reset" id="resetBtn">REINICIAR TODO</button>
+                    </div>
+
+                    <div class="history" id="history"></div>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-s); margin-bottom: 2rem;">
-                    Esta es una simulación web del <strong>Dashboard de Ecolens</strong>. Interactúa con el cronómetro para ver cómo se calculan los KPIs.
-                </p>
-                <a href="#" class="btn btn-stop" style="display: inline-block; text-decoration: none;">DESCARGAR APP COMPLETA (.EXE)</a>
+
+                <div class="dashboard-side">
+                    <div class="gauge-wrap">
+                        <canvas id="gaugeChart"></canvas>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 1.5rem; border-radius: 20px; text-align: left;">
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--accent-blue);">Nota de Ingeniería</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-s);">Este simulador replica la lógica de cronometraje industrial de la app de escritorio. El estándar actual es de <strong>15.00s</strong> por ciclo.</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="instructions">
-            <h3>Manual de Entrega Profesional</h3>
-            <p>1. <strong>Vista Web</strong>: Esta página permite visualizar la lógica de control de tiempo y eficiencia OEE sin instalar nada.</p>
-            <p>2. <strong>App Industrial</strong>: El sistema completo incluye módulos de monitoreo avanzado, Hildegard 2.0 y reportes PDF/Excel, disponibles en la versión de escritorio.</p>
-            <p>3. <strong>Código Fuente</strong>: Todo el sistema está desarrollado en Python con una arquitectura modular y escalable.</p>
-        </div>
+        <!-- FEATURES -->
+        <section class="features">
+            <div class="f-card">
+                <div class="f-icon">🔥</div>
+                <h3>Hildegard 2.0</h3>
+                <p>Seguimiento de diámetros de filamento y control térmico con alta precisión.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">📊</div>
+                <h3>Monitoreo Avanzado</h3>
+                <p>Gestión de defectos, roles de supervisor y métricas Cp/Cpk integradas.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">⚡</div>
+                <h3>SMED & DOE</h3>
+                <p>Módulos de optimización para reducir tiempos de cambio y mejorar el diseño de experimentos.</p>
+            </div>
+        </section>
 
-        <footer style="padding: 3rem 0; text-align: center; color: var(--text-s); font-size: 0.8rem;">
-            &copy; 2024 Ecolens App | Industrial Systems Engineering
+        <footer>
+            <p>&copy; 2024 Ecolens App Industrial OS. | Ingeniería Industrial Aplicada.</p>
+            <p style="margin-top: 5px; opacity: 0.6;">Link oficial del proyecto para revisión académica.</p>
         </footer>
     </div>
 
     <script>
-        // Lógica del Cronómetro y Dashboard
-        let startTime, timerId, subStartTime;
+        // CORE LOGIC
+        let startTime, subStartTime, timerId;
         let running = false;
         let laps = [];
-        const STANDARD_TIME = 15; // 15 segundos estándar
+        const STANDARD = 15.0;
 
         const display = document.getElementById('display');
         const subDisplay = document.getElementById('sub-display');
         const startBtn = document.getElementById('startBtn');
-        const clearBtn = document.getElementById('clearBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const historyDiv = document.getElementById('history');
-        const timerBox = document.getElementById('timer-box');
+        const tContainer = document.getElementById('timer-container');
 
-        // Chart configuration
-        const ctx = document.getElementById('oeeChart').getContext('2d');
-        const oeeChart = new Chart(ctx, {
+        // Gauge Setup
+        const ctx = document.getElementById('gaugeChart').getContext('2d');
+        const gauge = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['OEE', 'Pérdida'],
                 datasets: [{
                     data: [0, 100],
                     backgroundColor: ['#10B981', '#f1f5f9'],
-                    borderWidth: 0
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270,
                 }]
             },
-            options: {
-                circumference: 180,
-                rotation: 270,
-                cutout: '80%',
-                plugins: { legend: { display: false } }
-            }
+            options: { cutout: '85%', plugins: { legend: { display: false } } }
         });
 
-        function updateDisplay() {
+        function update() {
             const now = Date.now();
             const diff = (now - startTime) / 1000;
             const m = Math.floor(diff / 60);
@@ -181,69 +226,55 @@
             const sms = Math.floor((subDiff % 1) * 100);
             subDisplay.textContent = `PARCIAL: ${sm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}.${sms.toString().padStart(2, '0')}`;
 
-            // Andon Colors
-            if (subDiff > STANDARD_TIME * 1.25) {
-                timerBox.style.border = "2px solid #EF4444";
-            } else if (subDiff > STANDARD_TIME) {
-                timerBox.style.border = "2px solid #F59E0B";
-            } else {
-                timerBox.style.border = "none";
-            }
+            // Threshold Colors
+            if (subDiff > STANDARD * 1.25) tContainer.style.background = "#fee2e2";
+            else if (subDiff > STANDARD) tContainer.style.background = "#ffedd5";
+            else tContainer.style.background = "transparent";
         }
 
         startBtn.addEventListener('click', () => {
             if (!running) {
                 startTime = Date.now();
                 subStartTime = startTime;
-                timerId = setInterval(updateDisplay, 50);
+                timerId = setInterval(update, 50);
                 running = true;
                 startBtn.textContent = "MARCAR VUELTA (LAP)";
-                startBtn.classList.remove('btn-start');
-                startBtn.classList.add('btn-stop');
+                startBtn.className = "btn-action btn-lap";
             } else {
                 const now = Date.now();
-                const lapTime = (now - subStartTime) / 1000;
-                const totalTime = (now - startTime) / 1000;
-                
-                laps.push(lapTime);
+                const lap = (now - subStartTime) / 1000;
+                const total = (now - startTime) / 1000;
+                laps.push(lap);
                 subStartTime = now;
 
-                // Update KPIs
-                document.getElementById('kpi-last').textContent = `${lapTime.toFixed(2)}s`;
+                document.getElementById('kpi-last').textContent = `${lap.toFixed(2)}s`;
                 const avg = laps.reduce((a, b) => a + b) / laps.length;
                 document.getElementById('kpi-avg').textContent = `${avg.toFixed(2)}s`;
-
-                let oee = Math.min(100, Math.floor((STANDARD_TIME / lapTime) * 100));
+                
+                let oee = Math.min(100, Math.floor((STANDARD / lap) * 100));
                 document.getElementById('kpi-oee').textContent = `${oee}%`;
+                
+                gauge.data.datasets[0].data = [oee, 100 - oee];
+                gauge.update();
 
-                // Update Chart
-                oeeChart.data.datasets[0].data = [oee, 100 - oee];
-                oeeChart.update();
-
-                // Add to History
                 const item = document.createElement('div');
                 item.className = 'history-item';
-                item.innerHTML = `<span>#${laps.length.toString().padStart(2, '0')}</span> <span>${lapTime.toFixed(2)}s</span> <span>Total: ${totalTime.toFixed(2)}s</span>`;
+                item.innerHTML = `<span>#${laps.length.toString().padStart(2, '0')}</span> <span>${lap.toFixed(2)}s</span> <span>Σ ${total.toFixed(2)}s</span>`;
                 historyDiv.prepend(item);
             }
         });
 
-        clearBtn.addEventListener('click', () => {
+        resetBtn.addEventListener('click', () => {
             clearInterval(timerId);
-            running = false;
-            laps = [];
-            display.textContent = "00:00:00";
-            subDisplay.textContent = "PARCIAL: 00:00.00";
-            startBtn.textContent = "INICIAR CAPTURA";
-            startBtn.classList.add('btn-start');
-            startBtn.classList.remove('btn-stop');
+            running = false; laps = [];
+            display.textContent = "00:00:00"; subDisplay.textContent = "PARCIAL: 00:00.00";
+            startBtn.textContent = "INICIAR CAPTURA"; startBtn.className = "btn-action btn-start";
             historyDiv.innerHTML = "";
             document.getElementById('kpi-last').textContent = "---";
             document.getElementById('kpi-avg').textContent = "---";
             document.getElementById('kpi-oee').textContent = "0%";
-            timerBox.style.border = "none";
-            oeeChart.data.datasets[0].data = [0, 100];
-            oeeChart.update();
+            gauge.data.datasets[0].data = [0, 100]; gauge.update();
+            tContainer.style.background = "transparent";
         });
     </script>
 </body>
