@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecolens Industrial OS | Professional Production Management</title>
-    <meta name="description" content="Sistema operativo industrial para la gestión de producción, control estadístico y optimización de procesos.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Ecolens Industrial OS | Web Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-main: #F1F5F9;
@@ -15,267 +15,235 @@
             --text-p: #0F172A;
             --text-s: #334155;
             --danger: #EF4444;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --warning: #F59E0B;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: var(--text-p); }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-p);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        header { padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; margin-bottom: 2rem; }
+        .logo { font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .badge-live { background: var(--danger); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; animation: pulse 2s infinite; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        header {
-            padding: 2rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* DASHBOARD STYLES */
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        .card { background: var(--panel-bg); border-radius: 20px; padding: 2rem; border: 1px solid #cbd5e1; box-shadow: var(--shadow); }
+        
+        .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .kpi-card { background: white; border-radius: 15px; padding: 1.5rem; border: 1px solid #e2e8f0; text-align: center; }
+        .kpi-card span { font-size: 0.8rem; font-weight: 700; color: var(--text-s); text-transform: uppercase; }
+        .kpi-card h2 { font-size: 1.8rem; margin-top: 5px; }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .timer-display { text-align: center; padding: 3rem 0; border-radius: 20px; margin-bottom: 2rem; transition: all 0.3s ease; }
+        .timer-main { font-family: 'JetBrains Mono', monospace; font-size: 5rem; font-weight: 700; color: var(--text-p); }
+        .timer-sub { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent-blue); margin-top: -10px; }
 
-        .logo-img {
-            height: 50px;
-            width: auto;
-        }
+        .btn { padding: 1rem 2rem; border-radius: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; border: none; width: 100%; font-size: 0.9rem; }
+        .btn-start { background: var(--accent-green); color: white; }
+        .btn-start:hover { background: #059669; transform: translateY(-2px); }
+        .btn-stop { background: var(--accent-blue); color: white; margin-top: 10px; }
+        .btn-clear { background: transparent; border: 1px solid #cbd5e1; margin-top: 10px; }
 
-        .hero {
-            padding: 6rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            border-bottom: 1px solid #e2e8f0;
-        }
+        .history { max-height: 300px; overflow-y: auto; margin-top: 1.5rem; padding-right: 5px; }
+        .history-item { display: flex; justify-content: space-between; padding: 0.8rem; background: #f8fafc; border-radius: 10px; margin-bottom: 5px; border: 1px solid #f1f5f9; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--text-p), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .info-panel { text-align: center; }
+        .gauge-container { height: 250px; position: relative; margin-bottom: 2rem; }
 
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-s);
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-        }
+        .instructions { background: #1e293b; color: white; padding: 2rem; border-radius: 20px; margin-top: 3rem; }
+        .instructions h3 { color: var(--accent-blue); margin-bottom: 1rem; }
 
-        .badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--accent-green);
-            color: white;
-            border-radius: 99px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .cta-group {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-blue);
-            color: white;
-            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
-        }
-
-        .btn-secondary {
-            background-color: white;
-            color: var(--text-p);
-            border: 1px solid #e2e8f0;
-        }
-
-        .btn-secondary:hover {
-            background-color: #f8fafc;
-            transform: translateY(-2px);
-        }
-
-        .features {
-            padding: 5rem 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--panel-bg);
-            padding: 2.5rem;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            border: 1px solid #f1f5f9;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: #eff6ff;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .feature-card p {
-            color: var(--text-s);
-        }
-
-        footer {
-            padding: 4rem 0;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-            color: var(--text-s);
-        }
-
-        .status-container {
-            margin-top: 4rem;
-            padding: 2rem;
-            background: #fff;
-            border-radius: 16px;
-            border: 1px dashed var(--accent-blue);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .status-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--accent-blue);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .cta-group { flex-direction: column; }
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo-container">
-                <img src="Ecolens App Logo Transparent.png" alt="Ecolens Logo" class="logo-img" onerror="this.style.display='none'">
-                <span style="font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">ECOLENS APP</span>
+            <div class="logo">
+                <span>ECOLENS APP</span>
+                <span class="badge-live">LIVE PREVIEW</span>
             </div>
-            <nav>
-                <a href="#about" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Documentación</a>
-            </nav>
+            <div>
+                <a href="https://github.com/IamCarlose/Ecolens-App" target="_blank" style="text-decoration: none; color: var(--accent-blue); font-weight: 600;">GitHub Repo</a>
+            </div>
         </header>
+
+        <div class="dashboard-grid">
+            <!-- MAIN CONTROLS -->
+            <div class="card" id="main-panel">
+                <div class="kpi-row">
+                    <div class="kpi-card">
+                        <span>Último</span>
+                        <h2 id="kpi-last" style="color: var(--accent-blue);">---</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span>Promedio</span>
+                        <h2 id="kpi-avg" style="color: var(--accent-green);">---</h2>
+                    </div>
+                    <div class="kpi-card">
+                        <span>OEE Est.</span>
+                        <h2 id="kpi-oee" style="color: var(--warning);">0%</h2>
+                    </div>
+                </div>
+
+                <div class="timer-display" id="timer-box">
+                    <div class="timer-main" id="display">00:00:00</div>
+                    <div class="timer-sub" id="sub-display">PARCIAL: 00:00.00</div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-start" id="startBtn">INICIAR CAPTURA</button>
+                    <button class="btn btn-clear" id="clearBtn">LIMPIAR / REINICIAR</button>
+                </div>
+
+                <div class="history" id="history">
+                    <!-- Registros aparecerán aquí -->
+                </div>
+            </div>
+
+            <!-- SIDE INFO -->
+            <div class="card info-panel">
+                <h3 style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-s);">RENDIMIENTO EN TIEMPO REAL</h3>
+                <div class="gauge-container">
+                    <canvas id="oeeChart"></canvas>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-s); margin-bottom: 2rem;">
+                    Esta es una simulación web del <strong>Dashboard de Ecolens</strong>. Interactúa con el cronómetro para ver cómo se calculan los KPIs.
+                </p>
+                <a href="#" class="btn btn-stop" style="display: inline-block; text-decoration: none;">DESCARGAR APP COMPLETA (.EXE)</a>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>Manual de Entrega Profesional</h3>
+            <p>1. <strong>Vista Web</strong>: Esta página permite visualizar la lógica de control de tiempo y eficiencia OEE sin instalar nada.</p>
+            <p>2. <strong>App Industrial</strong>: El sistema completo incluye módulos de monitoreo avanzado, Hildegard 2.0 y reportes PDF/Excel, disponibles en la versión de escritorio.</p>
+            <p>3. <strong>Código Fuente</strong>: Todo el sistema está desarrollado en Python con una arquitectura modular y escalable.</p>
+        </div>
+
+        <footer style="padding: 3rem 0; text-align: center; color: var(--text-s); font-size: 0.8rem;">
+            &copy; 2024 Ecolens App | Industrial Systems Engineering
+        </footer>
     </div>
 
-    <section class="hero">
-        <div class="container">
-            <span class="badge">Industrial OS v4.0</span>
-            <h1>Gestión Inteligente para<br>la Industria de Lentes</h1>
-            <p>Ecolens App es una suite de herramientas avanzadas diseñada para optimizar la producción, controlar la calidad estadística y maximizar el rendimiento OEE en entornos industriales exigentes.</p>
-            
-            <div class="cta-group">
-                <a href="#" class="btn btn-primary">Descargar Aplicación (Win)</a>
-                <a href="https://github.com/IamCarlose/ECOLENTES" target="_blank" class="btn btn-secondary">Ver Repositorio GitHub</a>
-            </div>
-
-            <div class="status-container">
-                <div class="status-header">
-                    <span>⚡ AVISO DE PLATAFORMA</span>
-                </div>
-                <p style="font-size: 0.9rem;">Esta es la <strong>Landing Page</strong> del proyecto. La aplicación principal es una herramienta de escritorio de alto rendimiento disponible para descarga.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="container features" id="features">
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3>Dashboard Real-Time</h3>
-            <p>Monitoreo en vivo de indicadores clave (OEE, Disponibilidad, Calidad) con visualización dinámica de rendimiento.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔥</div>
-            <h3>Hildegard 2.0</h3>
-            <p>Módulo de ingeniería avanzada para el seguimiento de diámetros de filamento y control de procesos térmicos.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🎯</div>
-            <h3>SMED & DOE</h3>
-            <p>Optimizadores de cambio de formato y diseño de experimentos para la mejora continua de la producción.</p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Ecolens App Industrial System. Todos los derechos reservados.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.8rem;">Desarrollado para Ingeniería Industrial | Proyecto de Gestión de Operaciones</p>
-        </div>
-    </footer>
-
     <script>
-        // Animación suave al cargar
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.feature-card').forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 100 * index);
-            });
+        // Lógica del Cronómetro y Dashboard
+        let startTime, timerId, subStartTime;
+        let running = false;
+        let laps = [];
+        const STANDARD_TIME = 15; // 15 segundos estándar
+
+        const display = document.getElementById('display');
+        const subDisplay = document.getElementById('sub-display');
+        const startBtn = document.getElementById('startBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const historyDiv = document.getElementById('history');
+        const timerBox = document.getElementById('timer-box');
+
+        // Chart configuration
+        const ctx = document.getElementById('oeeChart').getContext('2d');
+        const oeeChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['OEE', 'Pérdida'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: ['#10B981', '#f1f5f9'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                circumference: 180,
+                rotation: 270,
+                cutout: '80%',
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        function updateDisplay() {
+            const now = Date.now();
+            const diff = (now - startTime) / 1000;
+            const m = Math.floor(diff / 60);
+            const s = Math.floor(diff % 60);
+            const ms = Math.floor((diff % 1) * 100);
+            display.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}:${ms.toString().padStart(2, '0')}`;
+
+            const subDiff = (now - subStartTime) / 1000;
+            const sm = Math.floor(subDiff / 60);
+            const ss = Math.floor(subDiff % 60);
+            const sms = Math.floor((subDiff % 1) * 100);
+            subDisplay.textContent = `PARCIAL: ${sm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}.${sms.toString().padStart(2, '0')}`;
+
+            // Andon Colors
+            if (subDiff > STANDARD_TIME * 1.25) {
+                timerBox.style.border = "2px solid #EF4444";
+            } else if (subDiff > STANDARD_TIME) {
+                timerBox.style.border = "2px solid #F59E0B";
+            } else {
+                timerBox.style.border = "none";
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (!running) {
+                startTime = Date.now();
+                subStartTime = startTime;
+                timerId = setInterval(updateDisplay, 50);
+                running = true;
+                startBtn.textContent = "MARCAR VUELTA (LAP)";
+                startBtn.classList.remove('btn-start');
+                startBtn.classList.add('btn-stop');
+            } else {
+                const now = Date.now();
+                const lapTime = (now - subStartTime) / 1000;
+                const totalTime = (now - startTime) / 1000;
+                
+                laps.push(lapTime);
+                subStartTime = now;
+
+                // Update KPIs
+                document.getElementById('kpi-last').textContent = `${lapTime.toFixed(2)}s`;
+                const avg = laps.reduce((a, b) => a + b) / laps.length;
+                document.getElementById('kpi-avg').textContent = `${avg.toFixed(2)}s`;
+
+                let oee = Math.min(100, Math.floor((STANDARD_TIME / lapTime) * 100));
+                document.getElementById('kpi-oee').textContent = `${oee}%`;
+
+                // Update Chart
+                oeeChart.data.datasets[0].data = [oee, 100 - oee];
+                oeeChart.update();
+
+                // Add to History
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `<span>#${laps.length.toString().padStart(2, '0')}</span> <span>${lapTime.toFixed(2)}s</span> <span>Total: ${totalTime.toFixed(2)}s</span>`;
+                historyDiv.prepend(item);
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            clearInterval(timerId);
+            running = false;
+            laps = [];
+            display.textContent = "00:00:00";
+            subDisplay.textContent = "PARCIAL: 00:00.00";
+            startBtn.textContent = "INICIAR CAPTURA";
+            startBtn.classList.add('btn-start');
+            startBtn.classList.remove('btn-stop');
+            historyDiv.innerHTML = "";
+            document.getElementById('kpi-last').textContent = "---";
+            document.getElementById('kpi-avg').textContent = "---";
+            document.getElementById('kpi-oee').textContent = "0%";
+            timerBox.style.border = "none";
+            oeeChart.data.datasets[0].data = [0, 100];
+            oeeChart.update();
         });
     </script>
 </body>
